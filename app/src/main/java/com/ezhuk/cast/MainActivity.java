@@ -26,7 +26,9 @@ import android.support.v7.media.MediaRouteSelector;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
+import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.cast.CastMediaControlIntent;
+import com.google.android.gms.cast.Cast.MessageReceivedCallback;
 
 
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
@@ -40,6 +42,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
     private MediaRouter mMediaRouter;
     private MediaRouteSelector mMediaRouteSelector;
     private MediaRouter.Callback mMediaRouterCallback;
+    private GoogleApiClient mApiClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,24 +90,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
             mMediaRouter.removeCallback(mMediaRouterCallback);
         }
         super.onPause();
-    }
-
-    protected boolean checkGooglePlayServices() {
-        int ret = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
-        if (ConnectionResult.SUCCESS == ret) {
-            return true;
-        }
-
-        Dialog dialog = GooglePlayServicesUtil.getErrorDialog(ret, this, 0);
-        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-            @Override
-            public void onCancel(DialogInterface dialogInterface) {
-                finish();
-            }
-        });
-        dialog.show();
-
-        return false;
     }
 
     @Override
@@ -168,6 +153,40 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         public void onRouteUnselected(MediaRouter router, RouteInfo info) {
             // TODO
         }
+    }
+
+    class TextChannel implements MessageReceivedCallback {
+
+        public String getNamespace() {
+            return getString(R.string.namespace);
+        }
+
+        @Override
+        public void onMessageReceived(CastDevice castDevice, String namespace, String message) {
+            // TODO
+        }
+    }
+
+    private boolean checkGooglePlayServices() {
+        int ret = GooglePlayServicesUtil.isGooglePlayServicesAvailable(this);
+        if (ConnectionResult.SUCCESS == ret) {
+            return true;
+        }
+
+        Dialog dialog = GooglePlayServicesUtil.getErrorDialog(ret, this, 0);
+        dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialogInterface) {
+                finish();
+            }
+        });
+        dialog.show();
+
+        return false;
+    }
+
+    private void sendMessage(String message) {
+        // TODO
     }
 
     /**
