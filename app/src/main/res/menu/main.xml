@@ -2,10 +2,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.ezhuk.cast.MainActivity" >
-    <item android:id="@+id/media_route_menu_item"
-        android:title="@string/media_route_menu_title"
+
+    <item android:id="@+id/media_route_item"
+        android:title="@string/media_route_title"
         app:actionProviderClass="android.support.v7.app.MediaRouteActionProvider"
         app:showAsAction="always" />
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

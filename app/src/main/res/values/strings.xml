@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Cast</string>
-    <string name="app_id">YOUR_APPLICATION_ID</string>
-    <string name="title_section1">Section 1</string>
-    <string name="title_section2">Section 2</string>
-    <string name="title_section3">Section 3</string>
+    <string name="app_id">9F238C0F</string>
+    <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="media_route_menu_title">Play on&#8230;</string>
-    <string name="namespace">urn:x-cast:com.ezhuk.cast</string>
+    <string name="text">Enter text</string>
+    <string name="send">Send</string>
+    <string name="media_route_title">Play on&#8230;</string>
+    <string name="text_namespace">urn:x-cast:com.ezhuk.cast.text</string>
 </resources>
