@@ -12,6 +12,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.os.Build;
 
+import java.io.IOException;
+
 import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.MediaRouteActionProvider;
@@ -31,8 +33,6 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.common.api.ResultCallback;
 import com.google.android.gms.common.api.Status;
 
-import java.io.IOException;
-import java.sql.Connection;
 
 public class MainActivity extends ActionBarActivity {
     private MediaRouter mMediaRouter;
@@ -193,6 +193,16 @@ public class MainActivity extends ActionBarActivity {
         mWaitingForReconnect = false;
     }
 
+    private void setChannel() {
+        try {
+            Cast.CastApi.setMessageReceivedCallbacks(mGoogleApiClient,
+                    mTextChannel.getNamespace(),
+                    mTextChannel);
+        } catch (IOException e) {
+            // TODO
+        }
+    }
+
     private class MediaRouterCallback extends MediaRouter.Callback {
         @Override
         public void onRouteSelected(MediaRouter router, RouteInfo info) {
@@ -227,13 +237,7 @@ public class MainActivity extends ActionBarActivity {
                             && connectionHint.getBoolean(Cast.EXTRA_APP_NO_LONGER_RUNNING)) {
                         doneCast();
                     } else {
-                        try {
-                            Cast.CastApi.setMessageReceivedCallbacks(mGoogleApiClient,
-                                    mTextChannel.getNamespace(),
-                                    mTextChannel);
-                        } catch (IOException e) {
-                            // TODO
-                        }
+                        setChannel();
                     }
                 } else {
                     Cast.CastApi.launchApplication(mGoogleApiClient,
@@ -246,13 +250,7 @@ public class MainActivity extends ActionBarActivity {
                                     if (status.isSuccess()) {
                                         mApplicationStarted = true;
                                         mTextChannel = new TextChannel();
-                                        try {
-                                            Cast.CastApi.setMessageReceivedCallbacks(mGoogleApiClient,
-                                                    mTextChannel.getNamespace(),
-                                                    mTextChannel);
-                                        } catch (IOException e) {
-                                            // TODO
-                                        }
+                                        setChannel();
                                         sendText("TODO");
                                     } else {
                                         doneCast();
