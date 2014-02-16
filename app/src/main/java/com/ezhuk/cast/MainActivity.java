@@ -118,8 +118,8 @@ public class MainActivity extends ActionBarActivity {
         EditText editText = (EditText) findViewById(R.id.text);
         String text = editText.getText().toString();
         if (!text.isEmpty()) {
-            sendText(text);
             editText.setText("");
+            sendText(text);
         } else {
             Toast.makeText(MainActivity.this, "Please enter text", Toast.LENGTH_SHORT)
                     .show();
@@ -286,7 +286,8 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public void onMessageReceived(CastDevice device, String namespace,
                 String message) {
-            // TODO
+            Toast.makeText(MainActivity.this, message, Toast.LENGTH_SHORT)
+                    .show();
         }
     }
 
