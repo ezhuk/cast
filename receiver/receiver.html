@@ -15,15 +15,13 @@
       text-align: center;
       color: #fff;
       background-color: #000;
-      font-family: arial, sans-serif;
-      font-size: 36px;
-      font-weight: bold;
+      font: bold 36px arial, sans-serif;
     }
   </style>
-  <script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
 </head>
 <body>
   <div id="text">Cast</div>
+  <script src="//www.gstatic.com/cast/sdk/libs/receiver/2.0.0/cast_receiver.js"></script>
   <script type="text/javascript">
     window.onload = function() {
       window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();

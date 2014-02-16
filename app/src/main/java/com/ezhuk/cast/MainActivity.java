@@ -251,7 +251,7 @@ public class MainActivity extends ActionBarActivity {
                                         mApplicationStarted = true;
                                         mTextChannel = new TextChannel();
                                         setChannel();
-                                        sendText("TODO");
+                                        sendText(getResources().getString(R.string.app_name));
                                     } else {
                                         doneCast();
                                     }
