@@ -7,5 +7,5 @@
     <string name="text">Enter text</string>
     <string name="send">Send</string>
     <string name="media_route_title">Play on&#8230;</string>
-    <string name="text_namespace">urn:x-cast:com.ezhuk.cast.text</string>
+    <string name="text_namespace">NAMESPACE_ID</string>
 </resources>

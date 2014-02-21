@@ -25,7 +25,7 @@
   <script type="text/javascript">
     window.onload = function() {
       window.castReceiverManager = cast.receiver.CastReceiverManager.getInstance();
-      window.messageBus = window.castReceiverManager.getCastMessageBus('urn:x-cast:com.ezhuk.cast.text');
+      window.messageBus = window.castReceiverManager.getCastMessageBus('NAMESPACE_ID');
       window.messageBus.onMessage = function(event) {
         document.getElementById("text").innerHTML=event.data;
         window.messageBus.send(event.senderId, event.data);
