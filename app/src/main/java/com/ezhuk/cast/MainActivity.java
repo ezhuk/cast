@@ -35,6 +35,8 @@ import com.google.android.gms.common.api.Status;
 
 
 public class MainActivity extends ActionBarActivity {
+    private static final String TAG = "MainActivity";
+
     private MediaRouter mMediaRouter;
     private MediaRouter.Callback mMediaRouterCallback;
     private MediaRouteSelector mMediaRouteSelector;
@@ -60,13 +62,12 @@ public class MainActivity extends ActionBarActivity {
 
         mMediaRouter = MediaRouter.getInstance(getApplicationContext());
         mMediaRouteSelector = new MediaRouteSelector.Builder()
-                .addControlCategory(
-                        CastMediaControlIntent.categoryForCast(
-                                getResources().getString(R.string.app_id))).build();
-
+                .addControlCategory(CastMediaControlIntent
+                        .categoryForCast(getResources()
+                                .getString(R.string.app_id)))
+                .build();
         mMediaRouterCallback = new MediaRouterCallback();
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -75,7 +76,8 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem mediaRouteItem = menu.findItem(R.id.media_route_item);
         MediaRouteActionProvider mediaRouteActionProvider =
-                (MediaRouteActionProvider) MenuItemCompat.getActionProvider(mediaRouteItem);
+                (MediaRouteActionProvider) MenuItemCompat
+                        .getActionProvider(mediaRouteItem);
         mediaRouteActionProvider.setRouteSelector(mMediaRouteSelector);
         return true;
     }
@@ -121,7 +123,7 @@ public class MainActivity extends ActionBarActivity {
             editText.setText("");
             sendText(text);
         } else {
-            Toast.makeText(MainActivity.this, "Please enter text", Toast.LENGTH_SHORT)
+            Toast.makeText(MainActivity.this, "Enter text", Toast.LENGTH_SHORT)
                     .show();
         }
     }
@@ -139,8 +141,8 @@ public class MainActivity extends ActionBarActivity {
                                 }
                             }
                         });
-            } catch (Exception e) {
-                // TODO
+            } catch (Exception ex) {
+                Log.e(TAG, "sendText: ", ex);
             }
         } else {
             Toast.makeText(MainActivity.this, text, Toast.LENGTH_SHORT)
@@ -162,8 +164,8 @@ public class MainActivity extends ActionBarActivity {
                     .addOnConnectionFailedListener(mConnectionFailedListener)
                     .build();
             mGoogleApiClient.connect();
-        } catch (Exception e) {
-            // TODO
+        } catch (Exception ex) {
+            Log.e(TAG, "initCast: ", ex);
         }
     }
 
@@ -173,12 +175,12 @@ public class MainActivity extends ActionBarActivity {
                 try {
                     Cast.CastApi.stopApplication(mGoogleApiClient);
                     if (null != mTextChannel) {
-                        Cast.CastApi.removeMessageReceivedCallbacks(mGoogleApiClient,
-                                mTextChannel.getNamespace());
+                        Cast.CastApi.removeMessageReceivedCallbacks(
+                                mGoogleApiClient, mTextChannel.getNamespace());
                         mTextChannel = null;
                     }
-                } catch (IOException e) {
-                    // TODO
+                } catch (IOException ex) {
+                    Log.e(TAG, "doneCast: ", ex);
                 }
                 mApplicationStarted = false;
             }
@@ -198,8 +200,8 @@ public class MainActivity extends ActionBarActivity {
             Cast.CastApi.setMessageReceivedCallbacks(mGoogleApiClient,
                     mTextChannel.getNamespace(),
                     mTextChannel);
-        } catch (IOException e) {
-            // TODO
+        } catch (IOException ex) {
+            Log.e(TAG, "setChannel: ", ex);
         }
     }
 
@@ -233,8 +235,8 @@ public class MainActivity extends ActionBarActivity {
                 if (mWaitingForReconnect) {
                     mWaitingForReconnect = false;
 
-                    if ((null != connectionHint)
-                            && connectionHint.getBoolean(Cast.EXTRA_APP_NO_LONGER_RUNNING)) {
+                    if ((null != connectionHint) && connectionHint
+                            .getBoolean(Cast.EXTRA_APP_NO_LONGER_RUNNING)) {
                         doneCast();
                     } else {
                         setChannel();
@@ -251,7 +253,8 @@ public class MainActivity extends ActionBarActivity {
                                         mApplicationStarted = true;
                                         mTextChannel = new TextChannel();
                                         setChannel();
-                                        sendText(getResources().getString(R.string.app_name));
+                                        sendText(getResources()
+                                                .getString(R.string.app_name));
                                     } else {
                                         doneCast();
                                     }
@@ -259,8 +262,8 @@ public class MainActivity extends ActionBarActivity {
                             });
 
                 }
-            } catch (Exception e) {
-                // TODO
+            } catch (Exception ex) {
+                Log.e(TAG, "onConnected: ", ex);
             }
         }
 
@@ -302,7 +305,8 @@ public class MainActivity extends ActionBarActivity {
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
+            View rootView = inflater.inflate(R.layout.fragment_main, container,
+                    false);
             return rootView;
         }
     }
