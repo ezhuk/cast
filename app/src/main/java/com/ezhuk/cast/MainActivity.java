@@ -12,8 +12,10 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -44,6 +46,10 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
+    private ListView mDeviceList;
+    private ArrayAdapter<String> mDeviceListAdapter;
+    private ArrayList<String> mDeviceNames;
+
     private MediaRouter mMediaRouter;
     private MediaRouter.Callback mMediaRouterCallback;
     private MediaRouteSelector mMediaRouteSelector;
@@ -53,6 +59,7 @@ public class MainActivity extends ActionBarActivity {
     private ConnectionCallbacks mConnectionCallbacks;
     private ConnectionFailedListener mConnectionFailedListener;
     private TextChannel mTextChannel;
+
     private boolean mApplicationStarted;
     private boolean mWaitingForReconnect;
 
@@ -68,6 +75,13 @@ public class MainActivity extends ActionBarActivity {
                 getResources().getStringArray(R.array.drawer_array)));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+//        mDeviceList = (ListView) findViewById(R.id.devices_list);
+//        mDeviceNames = new ArrayList<String>();
+//        mDeviceListAdapter = new ArrayAdapter<String>(this,
+//                R.layout.device_item,
+//                mDeviceNames);
+//        mDeviceList.setAdapter(mDeviceListAdapter);
+
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 
@@ -79,7 +93,7 @@ public class MainActivity extends ActionBarActivity {
                 invalidateOptionsMenu();
             }
 
-            public void onDrawerOpened(View drawerView) {
+            public void onDrawerOpened(View view) {
                 invalidateOptionsMenu();
             }
         };
@@ -159,7 +173,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public void onConfigurationChanged(Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
-        // Pass any configuration change to the drawer toggls
+        // Pass any configuration change to the drawer toggle.
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
 
@@ -184,7 +198,7 @@ public class MainActivity extends ActionBarActivity {
                             @Override
                             public void onResult(Status status) {
                                 if (!status.isSuccess()) {
-                                    // TODO
+                                    Log.e(TAG, "sendText: could not send text");
                                 }
                             }
                         });
@@ -253,6 +267,11 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private class MediaRouterCallback extends MediaRouter.Callback {
+        @Override
+        public void onRouteAdded(MediaRouter router, RouteInfo info) {
+            // TODO
+        }
+
         @Override
         public void onRouteSelected(MediaRouter router, RouteInfo info) {
             initCast(info.getExtras());
@@ -361,13 +380,12 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static class TextFragment extends Fragment {
-
         public TextFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                Bundle savedInstanceState) {
+                                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_text, container,
                     false);
             return rootView;
@@ -375,7 +393,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static class DevicesFragment extends Fragment {
-
         public DevicesFragment() {
         }
 
