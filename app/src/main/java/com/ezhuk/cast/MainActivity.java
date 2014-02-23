@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
@@ -46,9 +47,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
-    private ListView mDeviceList;
-    private ArrayAdapter<String> mDeviceListAdapter;
-    private ArrayList<String> mDeviceNames;
+    public ArrayList<String> mDeviceNames;
 
     private MediaRouter mMediaRouter;
     private MediaRouter.Callback mMediaRouterCallback;
@@ -75,12 +74,7 @@ public class MainActivity extends ActionBarActivity {
                 getResources().getStringArray(R.array.drawer_array)));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
-//        mDeviceList = (ListView) findViewById(R.id.devices_list);
-//        mDeviceNames = new ArrayList<String>();
-//        mDeviceListAdapter = new ArrayAdapter<String>(this,
-//                R.layout.device_item,
-//                mDeviceNames);
-//        mDeviceList.setAdapter(mDeviceListAdapter);
+        mDeviceNames = new ArrayList<String>();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
@@ -266,10 +260,26 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
+    private void updateDevicesFragment() {
+        Fragment fragment = getFragmentManager()
+                .findFragmentById(R.id.drawer_frame);
+        if (fragment.getClass() == DevicesFragment.class) {
+            DevicesFragment devicesFragment = (DevicesFragment) fragment;
+            devicesFragment.updateDevicesList();
+        }
+    }
+
     private class MediaRouterCallback extends MediaRouter.Callback {
         @Override
         public void onRouteAdded(MediaRouter router, RouteInfo info) {
             // TODO
+            updateDevicesFragment();
+        }
+
+        @Override
+        public void onRouteRemoved(MediaRouter router, RouteInfo info) {
+            // TODO
+            updateDevicesFragment();
         }
 
         @Override
@@ -393,15 +403,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public static class DevicesFragment extends Fragment {
+        private ArrayAdapter<String> mDeviceListAdapter;
+
         public DevicesFragment() {
         }
 
         @Override
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                                  Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_devices, container,
-                    false);
+            View rootView = inflater.inflate(R.layout.fragment_devices,
+                    container, false);
+            MainActivity activity = (MainActivity) getActivity();
+            ListView deviceList = (ListView) rootView.findViewById(
+                    R.id.devices_list);
+            mDeviceListAdapter = new ArrayAdapter<String>(activity,
+                    R.layout.device_item,
+                    activity.mDeviceNames);
+            deviceList.setAdapter(mDeviceListAdapter);
             return rootView;
+        }
+
+        public void updateDevicesList() {
+            mDeviceListAdapter.notifyDataSetChanged();
         }
     }
 }
