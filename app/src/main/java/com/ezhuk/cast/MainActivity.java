@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -47,6 +48,7 @@ public class MainActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
 
+    private HashMap<String, String> mRouteInfos;
     public ArrayList<String> mDeviceNames;
 
     private MediaRouter mMediaRouter;
@@ -74,6 +76,7 @@ public class MainActivity extends ActionBarActivity {
                 getResources().getStringArray(R.array.drawer_array)));
         mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
+        mRouteInfos = new HashMap<String, String>();
         mDeviceNames = new ArrayList<String>();
 
         getActionBar().setDisplayHomeAsUpEnabled(true);
@@ -265,6 +268,8 @@ public class MainActivity extends ActionBarActivity {
                 .findFragmentById(R.id.drawer_frame);
         if (fragment.getClass() == DevicesFragment.class) {
             DevicesFragment devicesFragment = (DevicesFragment) fragment;
+            mDeviceNames.clear();
+            mDeviceNames.addAll(mRouteInfos.values());
             devicesFragment.updateDevicesList();
         }
     }
@@ -272,13 +277,13 @@ public class MainActivity extends ActionBarActivity {
     private class MediaRouterCallback extends MediaRouter.Callback {
         @Override
         public void onRouteAdded(MediaRouter router, RouteInfo info) {
-            // TODO
+            mRouteInfos.put(info.getId(), info.getName());
             updateDevicesFragment();
         }
 
         @Override
         public void onRouteRemoved(MediaRouter router, RouteInfo info) {
-            // TODO
+            mRouteInfos.remove(info.getId());
             updateDevicesFragment();
         }
 
