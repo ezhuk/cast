@@ -425,6 +425,9 @@ public class MainActivity extends ActionBarActivity {
                     R.layout.device_item,
                     activity.mDeviceNames);
             deviceList.setAdapter(mDeviceListAdapter);
+
+            View emptyView = (View) rootView.findViewById(R.id.empty_view);
+            deviceList.setEmptyView(emptyView);
             return rootView;
         }
 

@@ -11,4 +11,13 @@
         android:divider="#ddd"
         android:dividerHeight="1dp"
         android:background="@android:color/background_light" />
+    <TextView
+        android:id="@+id/empty_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:minHeight="?android:attr/listPreferredItemHeight"
+        android:text="..."
+        android:textColor="#333"
+        android:textAppearance="?android:attr/textAppearanceListItem" />
 </RelativeLayout>
