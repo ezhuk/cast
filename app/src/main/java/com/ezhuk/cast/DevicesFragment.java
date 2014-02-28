@@ -25,11 +25,10 @@ public class DevicesFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_devices,
                 container, false);
         MainActivity activity = (MainActivity) getActivity();
-        ListView deviceList = (ListView) rootView.findViewById(
-                R.id.devices_list);
+        ListView deviceList = (ListView) rootView
+                .findViewById(R.id.devices_list);
         mDeviceListAdapter = new ArrayAdapter<String>(activity,
-                R.layout.device_item,
-                activity.mDeviceNames);
+                R.layout.device_item, activity.mDeviceNames);
         deviceList.setAdapter(mDeviceListAdapter);
 
         View emptyView = (View) rootView.findViewById(R.id.empty_view);

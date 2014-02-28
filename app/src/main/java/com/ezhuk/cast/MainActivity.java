@@ -69,32 +69,11 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (ListView) findViewById(R.id.drawer_list);
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_item,
-                getResources().getStringArray(R.array.drawer_array)));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
         mRouteInfos = new HashMap<String, String>();
         mDeviceNames = new ArrayList<String>();
 
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-                R.drawable.ic_drawer,
-                R.string.drawer_open,
-                R.string.drawer_close) {
-            public void onDrawerClosed(View view) {
-                invalidateOptionsMenu();
-            }
-
-            public void onDrawerOpened(View view) {
-                invalidateOptionsMenu();
-            }
-        };
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        setupActionBar();
+        setupDrawer();
 
         if (savedInstanceState == null) {
             selectDrawerItem(0);
@@ -184,6 +163,34 @@ public class MainActivity extends ActionBarActivity {
             Toast.makeText(MainActivity.this, "Enter text", Toast.LENGTH_SHORT)
                     .show();
         }
+    }
+
+    private void setupActionBar() {
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }
+
+    private void setupDrawer() {
+        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (ListView) findViewById(R.id.drawer_list);
+        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
+                R.layout.drawer_item,
+                getResources().getStringArray(R.array.drawer_array)));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+                R.drawable.ic_drawer,
+                R.string.drawer_open,
+                R.string.drawer_close) {
+            public void onDrawerClosed(View view) {
+                invalidateOptionsMenu();
+            }
+
+            public void onDrawerOpened(View view) {
+                invalidateOptionsMenu();
+            }
+        };
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
     }
 
     private void sendText(String text) {
