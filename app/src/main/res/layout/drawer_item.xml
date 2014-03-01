@@ -8,4 +8,4 @@
     android:minHeight="?android:attr/listPreferredItemHeightSmall"
     android:textColor="#333"
     android:textAppearance="?android:attr/textAppearanceListItemSmall"
-    android:background="?android:attr/activatedBackgroundIndicator"/>
+    android:background="?android:attr/activatedBackgroundIndicator" />
