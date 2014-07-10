@@ -1,11 +1,12 @@
-apply plugin: 'android'
+apply plugin: 'com.android.application'
 
 android {
     compileSdkVersion 19
-    buildToolsVersion "19.0.0"
+    buildToolsVersion "19.1.0"
 
     defaultConfig {
-        minSdkVersion 14
+        applicationId "com.ezhuk.cast"
+        minSdkVersion 19
         targetSdkVersion 19
         versionCode 1
         versionName "1.0"
@@ -13,15 +14,15 @@ android {
     buildTypes {
         release {
             runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    compile 'com.android.support:support-v4:19.0+'
-    compile 'com.android.support:appcompat-v7:19.0.+'
-    compile 'com.android.support:mediarouter-v7:19.0.+'
-    compile 'com.google.android.gms:play-services:4.2.42+'
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    compile 'com.android.support:support-v4:19+'
+    compile 'com.android.support:appcompat-v7:19+'
+    compile 'com.android.support:mediarouter-v7:19+'
+    compile 'com.google.android.gms:play-services:4.3.+'
 }
