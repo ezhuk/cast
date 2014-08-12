@@ -57,8 +57,6 @@ public class MainActivity extends ActionBarActivity {
     private CastDevice mCastDevice;
     private GoogleApiClient mGoogleApiClient;
     private Cast.Listener mCastListener;
-    private ConnectionCallbacks mConnectionCallbacks;
-    private ConnectionFailedListener mConnectionFailedListener;
     private TextChannel mTextChannel;
 
     private boolean mApplicationStarted;
@@ -219,14 +217,12 @@ public class MainActivity extends ActionBarActivity {
         try {
             mCastDevice = CastDevice.getFromBundle(bundle);
             mCastListener = new CastListener();
-            mConnectionCallbacks = new ConnectionCallbacks();
-            mConnectionFailedListener = new ConnectionFailedListener();
             Cast.CastOptions.Builder optionsBuilder = Cast.CastOptions
                     .builder(mCastDevice, mCastListener);
             mGoogleApiClient = new GoogleApiClient.Builder(this)
                     .addApi(Cast.API, optionsBuilder.build())
-                    .addConnectionCallbacks(mConnectionCallbacks)
-                    .addOnConnectionFailedListener(mConnectionFailedListener)
+                    .addConnectionCallbacks(new ConnectionCallbacks())
+                    .addOnConnectionFailedListener(new ConnectionFailedListener())
                     .build();
             mGoogleApiClient.connect();
         } catch (Exception ex) {
@@ -385,8 +381,7 @@ public class MainActivity extends ActionBarActivity {
     private class DrawerItemClickListener
             implements ListView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,
-                                long id) {
+        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectDrawerItem(position);
         }
     }
