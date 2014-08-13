@@ -17,6 +17,7 @@ public class DevicesFragment extends Fragment {
     private ArrayAdapter<String> mDeviceListAdapter;
 
     public DevicesFragment() {
+        // empty
     }
 
     @Override
@@ -24,15 +25,14 @@ public class DevicesFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_devices,
                 container, false);
-        MainActivity activity = (MainActivity) getActivity();
-        ListView deviceList = (ListView) rootView
-                .findViewById(R.id.devices_list);
-        mDeviceListAdapter = new ArrayAdapter<String>(activity,
-                R.layout.device_item, activity.mDeviceNames);
-        deviceList.setAdapter(mDeviceListAdapter);
 
-        View emptyView = (View) rootView.findViewById(R.id.empty_view);
-        deviceList.setEmptyView(emptyView);
+        ListView deviceList = (ListView) rootView.findViewById(R.id.devices_list);
+        MainActivity activity = (MainActivity) getActivity();
+        mDeviceListAdapter = new ArrayAdapter<String>(activity, R.layout.device_item,
+                activity.mDeviceNames);
+        deviceList.setAdapter(mDeviceListAdapter);
+        deviceList.setEmptyView(rootView.findViewById(R.id.empty_view));
+
         return rootView;
     }
 
