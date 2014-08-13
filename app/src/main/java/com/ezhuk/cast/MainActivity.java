@@ -79,9 +79,8 @@ public class MainActivity extends ActionBarActivity {
 
         mMediaRouter = MediaRouter.getInstance(getApplicationContext());
         mMediaRouteSelector = new MediaRouteSelector.Builder()
-                .addControlCategory(CastMediaControlIntent
-                        .categoryForCast(getResources()
-                                .getString(R.string.app_id)))
+                .addControlCategory(CastMediaControlIntent.categoryForCast(getResources()
+                        .getString(R.string.app_id)))
                 .build();
         mMediaRouterCallback = new MediaRouterCallback();
     }
@@ -93,8 +92,7 @@ public class MainActivity extends ActionBarActivity {
         getMenuInflater().inflate(R.menu.main, menu);
         MenuItem mediaRouteItem = menu.findItem(R.id.media_route_item);
         MediaRouteActionProvider mediaRouteActionProvider =
-                (MediaRouteActionProvider) MenuItemCompat
-                        .getActionProvider(mediaRouteItem);
+                (MediaRouteActionProvider) MenuItemCompat.getActionProvider(mediaRouteItem);
         mediaRouteActionProvider.setRouteSelector(mMediaRouteSelector);
         return true;
     }
@@ -378,8 +376,7 @@ public class MainActivity extends ActionBarActivity {
         }
     }
 
-    private class DrawerItemClickListener
-            implements ListView.OnItemClickListener {
+    private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             selectDrawerItem(position);
