@@ -4,16 +4,12 @@
 
 package com.ezhuk.cast;
 
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
 import android.app.Fragment;
 import android.support.v4.widget.DrawerLayout;
 import android.test.ActivityInstrumentationTestCase2;
 import android.widget.ListView;
 import android.widget.TextView;
-
-import com.ezhuk.cast.DevicesFragment;
-import com.ezhuk.cast.MainActivity;
-import com.ezhuk.cast.R;
 
 
 public class MainActivityTest
@@ -35,7 +31,7 @@ public class MainActivityTest
     }
 
     public void testMainActivityTest_ActionBar() {
-        final ActionBar actionBar = mMainActivity.getActionBar();
+        final ActionBar actionBar = mMainActivity.getSupportActionBar();
         assertNotNull("actionBar is Null", actionBar);
 
         final int displayOptions = actionBar.getDisplayOptions();

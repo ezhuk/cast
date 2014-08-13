@@ -164,8 +164,8 @@ public class MainActivity extends ActionBarActivity {
     }
 
     private void setupActionBar() {
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(true);
     }
 
     private void setupDrawer() {
